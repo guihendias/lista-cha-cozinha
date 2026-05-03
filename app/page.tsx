@@ -13,7 +13,7 @@ export default async function Home() {
           Chá de Cozinha
         </h1>
         <p className="mt-2 text-xs font-semibold tracking-[0.3em] uppercase text-lilac-dark">
-          Guilherme & Noiva
+          Mary & Gui
         </p>
         <div className="mx-auto mt-4 h-px w-16 bg-gold" />
         <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-text-light">

@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Chá de Cozinha — Guilherme & Noiva",
+  title: "Chá de Cozinha — Mary & Gui",
   description:
     "Lista de presentes para o chá de cozinha. Escolha um presente e nos ajude a montar nosso lar!",
 };
