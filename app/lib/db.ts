@@ -34,6 +34,7 @@ export async function reserveGift(
     UPDATE gifts
     SET reserved_by = ${name}, reserved_at = NOW()
     WHERE id = ${id} AND reserved_by IS NULL
+    RETURNING id
   `;
-  return result.length > 0 || (result as unknown as { rowCount: number }).rowCount > 0;
+  return result.length > 0;
 }
