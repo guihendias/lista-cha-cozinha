@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-lilac: #C8A2C8;
+  --color-lilac-light: #E8D5E8;
+  --color-lilac-dark: #9B6F9B;
+  --color-beige: #F5F0EB;
+  --color-beige-dark: #E8DDD4;
+  --color-gold: #C9A96E;
+  --color-text: #3D3D3D;
+  --color-text-light: #7A7A7A;
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--color-beige);
+  color: var(--color-text);
+}

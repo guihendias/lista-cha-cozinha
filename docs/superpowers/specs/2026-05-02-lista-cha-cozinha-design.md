@@ -72,7 +72,7 @@ Sem tabelas adicionais. `reserved_by IS NULL` = disponível.
 
 ### Layout
 
-- **Header:** Subtítulo "CHÁ DE COZINHA" (uppercase, tracking wide, lilás escuro), título "Guilherme & Noiva" (Cormorant Garamond, grande), divisor dourado, descrição
+- **Header:** Título principal "Chá de Cozinha" (Cormorant Garamond, grande, destaque), subtítulo "Guilherme & Noiva" (menor, uppercase, tracking wide, lilás escuro), divisor dourado, descrição
 
 - **Filtros de categoria:** Pills horizontais centralizados. Ativo = fundo lilás + texto branco. Inativo = fundo branco + borda bege
 
