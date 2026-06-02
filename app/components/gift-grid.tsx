@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LayoutGroup, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import type { Gift } from "../lib/db";
 import { GiftCard } from "./gift-card";
 import { CategoryFilter } from "./category-filter";
@@ -41,40 +41,39 @@ export function GiftGrid({ gifts }: GiftGridProps) {
         onChange={setActiveCategory}
       />
 
-      <LayoutGroup>
-        <div className="mx-auto grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 px-6 pb-2 max-sm:grid-cols-1 max-sm:gap-3 max-sm:px-4">
-          <AnimatePresence mode="popLayout">
-            {filteredAvailable.map((gift, i) => (
-              <GiftCard
-                key={gift.id}
-                gift={gift}
-                onReserve={setSelectedGift}
-                index={i}
-              />
-            ))}
-          </AnimatePresence>
-        </div>
+      {/* mode="sync": exits and entrances happen simultaneously — no empty-list flash */}
+      <div className="mx-auto grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 px-6 pb-2 max-sm:grid-cols-1 max-sm:gap-3 max-sm:px-4">
+        <AnimatePresence mode="sync" initial={false}>
+          {filteredAvailable.map((gift, i) => (
+            <GiftCard
+              key={gift.id}
+              gift={gift}
+              onReserve={setSelectedGift}
+              index={i}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
 
-        {filteredReserved.length > 0 && (
-          <>
-            <p className="mx-auto mt-8 max-w-5xl px-6 text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-text-light">
-              Já reservados
-            </p>
-            <div className="mx-auto mt-4 grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 px-6 pb-14 max-sm:grid-cols-1 max-sm:gap-3 max-sm:px-4">
-              <AnimatePresence mode="popLayout">
-                {filteredReserved.map((gift, i) => (
-                  <GiftCard
-                    key={gift.id}
-                    gift={gift}
-                    onReserve={() => {}}
-                    index={i}
-                  />
-                ))}
-              </AnimatePresence>
-            </div>
-          </>
-        )}
-      </LayoutGroup>
+      {filteredReserved.length > 0 && (
+        <>
+          <p className="mx-auto mt-8 max-w-5xl px-6 text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-text-light">
+            Já reservados
+          </p>
+          <div className="mx-auto mt-4 grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 px-6 pb-14 max-sm:grid-cols-1 max-sm:gap-3 max-sm:px-4">
+            <AnimatePresence mode="sync" initial={false}>
+              {filteredReserved.map((gift, i) => (
+                <GiftCard
+                  key={gift.id}
+                  gift={gift}
+                  onReserve={() => {}}
+                  index={i}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+        </>
+      )}
 
       <ReserveModal
         gift={selectedGift}

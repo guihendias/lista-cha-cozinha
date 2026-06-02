@@ -24,11 +24,10 @@ export function GiftCard({ gift, onReserve, index }: GiftCardProps) {
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: isReserved ? 0.45 : 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.97 }}
-      transition={{ duration: 0.35, delay: index * 0.04 }}
+      exit={{ opacity: 0, transition: { duration: 0.12, delay: 0 } }}
+      transition={{ duration: 0.22, delay: Math.min(index * 0.03, 0.12) }}
       className={`group overflow-hidden rounded-2xl border border-beige-dark bg-white transition-all duration-300 ${
         isReserved
           ? "pointer-events-none"
@@ -45,6 +44,7 @@ export function GiftCard({ gift, onReserve, index }: GiftCardProps) {
             src={gift.image_url}
             alt={gift.name}
             fill
+            unoptimized
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             sizes="(max-width: 640px) 144px, (max-width: 1024px) 33vw, 260px"
           />
