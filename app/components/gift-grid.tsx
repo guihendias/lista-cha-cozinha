@@ -42,7 +42,7 @@ export function GiftGrid({ gifts }: GiftGridProps) {
       />
 
       <LayoutGroup>
-        <div className="mx-auto grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 px-6 max-sm:grid-cols-1 max-sm:gap-4 max-sm:px-4">
+        <div className="mx-auto grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 px-6 pb-2 max-sm:grid-cols-1 max-sm:gap-3 max-sm:px-4">
           <AnimatePresence mode="popLayout">
             {filteredAvailable.map((gift, i) => (
               <GiftCard
@@ -60,7 +60,7 @@ export function GiftGrid({ gifts }: GiftGridProps) {
             <p className="mx-auto mt-8 max-w-5xl px-6 text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-text-light">
               Já reservados
             </p>
-            <div className="mx-auto mt-4 grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 px-6 pb-12 max-sm:grid-cols-1 max-sm:gap-4 max-sm:px-4">
+            <div className="mx-auto mt-4 grid max-w-5xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5 px-6 pb-14 max-sm:grid-cols-1 max-sm:gap-3 max-sm:px-4">
               <AnimatePresence mode="popLayout">
                 {filteredReserved.map((gift, i) => (
                   <GiftCard
