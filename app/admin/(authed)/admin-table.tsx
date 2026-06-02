@@ -292,7 +292,17 @@ function SortableGiftRow({ gift }: { gift: Gift }) {
             ✏️
           </Link>
           {gift.reserved_count > 0 && (
-            <form action={clearReservationAction}>
+            <form
+              action={clearReservationAction}
+              onSubmit={(e) => {
+                const names = gift.reservation_names.join(", ");
+                const msg =
+                  gift.reserved_count === 1
+                    ? `Limpar reserva de "${names}"?`
+                    : `Limpar ${gift.reserved_count} reservas (${names})?`;
+                if (!confirm(msg)) e.preventDefault();
+              }}
+            >
               <input type="hidden" name="id" value={gift.id} />
               <button
                 type="submit"

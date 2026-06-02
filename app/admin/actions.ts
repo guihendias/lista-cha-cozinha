@@ -14,6 +14,7 @@ import {
   deleteGift,
   clearReservation,
   updateDisplayOrder,
+  getGiftById,
 } from "../lib/db";
 
 async function requireAuth() {
@@ -68,6 +69,13 @@ export async function updateGiftAction(
   const image_url = String(formData.get("image_url") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
   const quantity = Math.max(1, Number(formData.get("quantity") ?? 1));
+
+  const current = await getGiftById(id);
+  if (current && quantity < current.reserved_count) {
+    return {
+      error: `Quantidade mínima é ${current.reserved_count} (presente já reservado ${current.reserved_count}x)`,
+    };
+  }
 
   if (!name || !image_url || !category) {
     return { error: "Todos os campos são obrigatórios" };
