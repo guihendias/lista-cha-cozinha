@@ -49,18 +49,33 @@ export function EditGiftForm({ gift }: { gift: Gift }) {
           </label>
         </div>
       </div>
-      <label className="block">
-        <span className="text-xs font-medium text-text-light">
-          URL da imagem
-        </span>
-        <input
-          name="image_url"
-          type="url"
-          required
-          defaultValue={gift.image_url}
-          className="mt-1 w-full rounded-lg border border-beige-dark px-3 py-2 text-sm outline-none focus:border-lilac"
-        />
-      </label>
+      <div className="grid gap-3 sm:grid-cols-[1fr_120px]">
+        <label className="block">
+          <span className="text-xs font-medium text-text-light">
+            URL da imagem
+          </span>
+          <input
+            name="image_url"
+            type="url"
+            required
+            defaultValue={gift.image_url}
+            className="mt-1 w-full rounded-lg border border-beige-dark px-3 py-2 text-sm outline-none focus:border-lilac"
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium text-text-light">
+            Quantidade
+          </span>
+          <input
+            name="quantity"
+            type="number"
+            min={1}
+            defaultValue={gift.quantity}
+            required
+            className="mt-1 w-full rounded-lg border border-beige-dark px-3 py-2 text-sm outline-none focus:border-lilac"
+          />
+        </label>
+      </div>
       {gift.reserved_count > 0 && (
         <p className="rounded-lg bg-beige/60 px-3 py-2 text-xs text-text-light">
           Reservado por <strong>{gift.reservation_names.join(", ")}</strong> ({gift.reserved_count}/{gift.quantity}). Use o botão
