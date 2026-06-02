@@ -30,7 +30,7 @@ export function AdminTable({ gifts }: AdminTableProps) {
   }, [createState]);
 
   const totalGifts = gifts.length;
-  const reservedCount = gifts.filter((g) => g.reserved_by !== null).length;
+  const reservedCount = gifts.filter((g) => g.is_fully_reserved).length;
   const availableCount = totalGifts - reservedCount;
 
   return (
@@ -147,7 +147,7 @@ export function AdminTable({ gifts }: AdminTableProps) {
 }
 
 function GiftRow({ gift }: { gift: Gift }) {
-  const isReserved = gift.reserved_by !== null;
+  const hasReservations = gift.reserved_count > 0;
 
   return (
     <tr className="hover:bg-beige/30">
@@ -166,10 +166,15 @@ function GiftRow({ gift }: { gift: Gift }) {
       <td className="px-4 py-3 font-medium text-text">{gift.name}</td>
       <td className="px-4 py-3 text-text-light">{gift.category}</td>
       <td className="px-4 py-3">
-        {isReserved ? (
+        {gift.is_fully_reserved ? (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-beige px-2.5 py-1 text-xs text-text-light">
             <span className="h-1.5 w-1.5 rounded-full bg-text-light" />
-            {gift.reserved_by}
+            {gift.reservation_names.join(", ")} ({gift.reserved_count}/{gift.quantity})
+          </span>
+        ) : hasReservations ? (
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-50 px-2.5 py-1 text-xs text-yellow-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+            Parcial ({gift.reserved_count}/{gift.quantity})
           </span>
         ) : (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-lilac-light/40 px-2.5 py-1 text-xs text-lilac-dark">
@@ -187,7 +192,7 @@ function GiftRow({ gift }: { gift: Gift }) {
           >
             ✏️
           </Link>
-          {isReserved && (
+          {hasReservations && (
             <form action={clearReservationAction}>
               <input type="hidden" name="id" value={gift.id} />
               <button

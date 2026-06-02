@@ -46,12 +46,13 @@ export async function createGiftAction(_prev: unknown, formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const image_url = String(formData.get("image_url") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
+  const quantity = Math.max(1, Number(formData.get("quantity") ?? 1));
 
   if (!name || !image_url || !category) {
     return { error: "Todos os campos são obrigatórios" };
   }
 
-  await createGift({ name, image_url, category });
+  await createGift({ name, image_url, category, quantity });
   revalidateAll();
   return { success: true };
 }
@@ -65,12 +66,13 @@ export async function updateGiftAction(
   const name = String(formData.get("name") ?? "").trim();
   const image_url = String(formData.get("image_url") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
+  const quantity = Math.max(1, Number(formData.get("quantity") ?? 1));
 
   if (!name || !image_url || !category) {
     return { error: "Todos os campos são obrigatórios" };
   }
 
-  await updateGift(id, { name, image_url, category });
+  await updateGift(id, { name, image_url, category, quantity });
   revalidateAll();
   redirect("/admin");
 }

@@ -20,8 +20,8 @@ export function GiftGrid({ gifts }: GiftGridProps) {
     ...Array.from(new Set(gifts.map((g) => g.category))),
   ];
 
-  const available = gifts.filter((g) => g.reserved_by === null);
-  const reserved = gifts.filter((g) => g.reserved_by !== null);
+  const available = gifts.filter((g) => !g.is_fully_reserved);
+  const reserved = gifts.filter((g) => g.is_fully_reserved);
 
   const filteredAvailable =
     activeCategory === "Todos"

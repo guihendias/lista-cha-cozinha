@@ -61,9 +61,9 @@ export function EditGiftForm({ gift }: { gift: Gift }) {
           className="mt-1 w-full rounded-lg border border-beige-dark px-3 py-2 text-sm outline-none focus:border-lilac"
         />
       </label>
-      {gift.reserved_by && (
+      {gift.reserved_count > 0 && (
         <p className="rounded-lg bg-beige/60 px-3 py-2 text-xs text-text-light">
-          Reservado por <strong>{gift.reserved_by}</strong>. Use o botão
+          Reservado por <strong>{gift.reservation_names.join(", ")}</strong> ({gift.reserved_count}/{gift.quantity}). Use o botão
           &ldquo;Limpar reserva&rdquo; na lista para liberar.
         </p>
       )}
