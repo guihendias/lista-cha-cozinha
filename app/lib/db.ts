@@ -149,14 +149,21 @@ export async function clearReservation(id: number): Promise<boolean> {
 export async function updateDisplayOrder(orderedIds: number[]): Promise<void> {
   if (orderedIds.length === 0) return;
   const sql = getDb();
-  const cases = orderedIds.map((_, i) => `WHEN $${i * 2 + 1}::int THEN $${i * 2 + 2}::int`).join(" ");
+
   const params: number[] = [];
-  orderedIds.forEach((id, i) => {
-    params.push(id, i);
-  });
-  const ids = orderedIds.map((_, i) => `$${i * 2 + 1}::int`).join(", ");
+  const cases = orderedIds.map((id, i) => {
+    params.push(id, i); // $1/$2, $3/$4, …
+    return `WHEN $${i * 2 + 1}::int THEN $${i * 2 + 2}::int`;
+  }).join(" ");
+
+  const baseOffset = params.length; // = orderedIds.length * 2
+  const inList = orderedIds.map((id, i) => {
+    params.push(id); // new slots starting at $baseOffset+1
+    return `$${baseOffset + i + 1}::int`;
+  }).join(", ");
+
   await sql.query(
-    `UPDATE gifts SET display_order = CASE id ${cases} END WHERE id IN (${ids})`,
+    `UPDATE gifts SET display_order = CASE id ${cases} END WHERE id IN (${inList})`,
     params
   );
 }
