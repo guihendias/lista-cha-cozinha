@@ -8,17 +8,27 @@ if (!file) {
   process.exit(1);
 }
 
+if (!process.env.DATABASE_URL) {
+  console.error('Error: DATABASE_URL environment variable is not set.');
+  process.exit(1);
+}
+
 const sql = neon(process.env.DATABASE_URL);
 const content = fs.readFileSync(path.resolve(file), 'utf8');
 const statements = content.split(';').map(s => s.trim()).filter(s => s.length > 0);
 
 (async () => {
-  for (const stmt of statements) {
-    await sql.query(stmt);
-    console.log('✓', stmt.substring(0, 80).replace(/\s+/g, ' ') + '...');
+  await sql.query('BEGIN');
+  try {
+    for (const stmt of statements) {
+      await sql.query(stmt);
+      console.log('✓', stmt.substring(0, 80).replace(/\s+/g, ' ') + '...');
+    }
+    await sql.query('COMMIT');
+    console.log('Migration complete.');
+  } catch (e) {
+    await sql.query('ROLLBACK');
+    console.error('Migration failed, rolled back:', e);
+    process.exit(1);
   }
-  console.log('Migration complete.');
-})().catch(e => {
-  console.error('Migration failed:', e);
-  process.exit(1);
-});
+})();
