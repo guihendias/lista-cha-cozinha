@@ -1,8 +1,8 @@
 import { getGifts } from "./lib/db";
 import { GiftGrid } from "./components/gift-grid";
 
-export const dynamic = "force-dynamic";
-
+// No force-dynamic needed — revalidatePath("/") is called after every mutation (reserve, clear, reorder)
+// The page uses Next.js on-demand revalidation instead of bypassing the cache entirely.
 export default async function Home() {
   const gifts = await getGifts();
 
