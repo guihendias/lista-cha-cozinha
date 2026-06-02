@@ -46,11 +46,13 @@ export function AdminTable({ gifts: initialGifts }: AdminTableProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [gifts, setGifts] = useState<Gift[]>(initialGifts);
-  const [, startReorderTransition] = useTransition();
+  const [isReordering, startReorderTransition] = useTransition();
 
   useEffect(() => {
-    setGifts(initialGifts);
-  }, [initialGifts]);
+    if (!isReordering) {
+      setGifts(initialGifts);
+    }
+  }, [initialGifts, isReordering]);
 
   useEffect(() => {
     if (createState && "success" in createState && createState.success) {
@@ -72,6 +74,7 @@ export function AdminTable({ gifts: initialGifts }: AdminTableProps) {
     const newIndex = gifts.findIndex((g) => g.id === over.id);
     if (oldIndex === -1 || newIndex === -1) return;
 
+    const previousGifts = gifts;
     const newGifts = [...gifts];
     const [moved] = newGifts.splice(oldIndex, 1);
     newGifts.splice(newIndex, 0, moved);
@@ -81,7 +84,7 @@ export function AdminTable({ gifts: initialGifts }: AdminTableProps) {
       try {
         await reorderGiftsAction(newGifts.map((g) => g.id));
       } catch {
-        setGifts(initialGifts);
+        setGifts(previousGifts);
       }
     });
   }
