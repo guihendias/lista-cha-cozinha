@@ -48,14 +48,18 @@ export function AdminTable({ gifts: initialGifts }: AdminTableProps) {
   const [gifts, setGifts] = useState<Gift[]>(initialGifts);
   const [isReordering, startReorderTransition] = useTransition();
 
+  // Sync server data into local state when not mid-drag (valid prop→state sync)
   useEffect(() => {
     if (!isReordering) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setGifts(initialGifts);
     }
   }, [initialGifts, isReordering]);
 
+  // Close form and reset on successful server action result
   useEffect(() => {
     if (createState && "success" in createState && createState.success) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowForm(false);
       formRef.current?.reset();
     }
