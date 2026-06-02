@@ -70,7 +70,8 @@ export function GiftCard({ gift, onReserve, index }: GiftCardProps) {
             <span className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase text-lilac-dark">
               {gift.category}
             </span>
-            <h3 className="mt-0.5 font-serif text-lg font-semibold leading-snug text-text sm:text-xl">
+            {/* line-clamp-2 caps at 2 lines; min-h reserves 2 lines on desktop so buttons stay aligned */}
+            <h3 className="mt-0.5 line-clamp-2 font-serif text-lg font-semibold leading-snug text-text sm:min-h-[3.5rem] sm:text-xl">
               {gift.name}
             </h3>
           </div>
