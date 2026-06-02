@@ -11,7 +11,7 @@ export async function reserveGiftAction(id: number, name: string) {
 
   const success = await reserveGift(id, trimmed);
   if (!success) {
-    return { success: false, error: "Este presente já foi reservado" };
+    return { success: false, error: "Este presente está esgotado" };
   }
 
   revalidatePath("/");

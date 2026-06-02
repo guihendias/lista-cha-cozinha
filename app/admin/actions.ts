@@ -13,6 +13,7 @@ import {
   updateGift,
   deleteGift,
   clearReservation,
+  updateDisplayOrder,
 } from "../lib/db";
 
 async function requireAuth() {
@@ -90,5 +91,11 @@ export async function clearReservationAction(formData: FormData) {
   const id = Number(formData.get("id"));
   if (!id) return;
   await clearReservation(id);
+  revalidateAll();
+}
+
+export async function reorderGiftsAction(orderedIds: number[]) {
+  await requireAuth();
+  await updateDisplayOrder(orderedIds);
   revalidateAll();
 }
